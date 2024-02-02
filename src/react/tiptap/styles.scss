@@ -1,0 +1,240 @@
+/* Basic editor styles */
+.ProseMirror {
+
+    > * + * {
+        padding: 0rem 1rem;
+    }
+  
+    ul,
+    ol {
+        padding: 0 3rem;
+    }
+
+    p {
+        padding: 0rem 1rem;
+    }
+  
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        line-height: 1.1;
+        padding: 0rem 1rem;
+    }
+  
+    code {
+        background-color: rgba(#616161, 0.1);
+        color: #616161;
+        // padding: 0rem 1rem;
+    }
+
+    // code block
+    pre {
+        background: #282a36;
+        color: #f8f8f2;
+        font-family: "JetBrainsMono", monospace;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        tab-size: 4;
+    
+        code {
+          color: inherit;
+          padding: 0;
+          background: none;
+          font-size: 0.8rem;
+        }
+    
+        .hljs-comment,
+        .hljs-quote {
+          color: #616161;
+        }
+    
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-attribute,
+        .hljs-tag,
+        .hljs-name,
+        .hljs-regexp,
+        .hljs-link,
+        .hljs-name,
+        .hljs-selector-id,
+        .hljs-selector-class {
+          color: #f98181;
+        }
+    
+        .hljs-number,
+        .hljs-meta,
+        .hljs-built_in,
+        .hljs-builtin-name,
+        .hljs-literal,
+        .hljs-type,
+        .hljs-params {
+          color: #fbbc88;
+        }
+    
+        .hljs-string,
+        .hljs-symbol,
+        .hljs-bullet {
+          color: #b9f18d;
+        }
+    
+        .hljs-title,
+        .hljs-section {
+          color: #faf594;
+        }
+    
+        .hljs-keyword,
+        .hljs-selector-tag {
+          color: #70cff8;
+        }
+    
+        .hljs-emphasis {
+          font-style: italic;
+        }
+    
+        .hljs-strong {
+          font-weight: 700;
+        }
+      }
+  
+    img {
+        max-width: 100%;
+        height: auto;
+        padding: 0rem 1rem;
+    }
+  
+    blockquote {
+        padding: 0rem 2rem;
+        border-left: 2px solid rgba(#0D0D0D, 0.1);
+    }
+  
+    hr {
+        border: none;
+        padding: 0rem 1rem;
+        border-top: 2px solid rgba(#0D0D0D, 0.1);
+        margin: 2rem 0;
+    }
+}
+
+.ProseMirror:focus {
+    outline: none;
+}
+  
+.react-component {
+    background: #FAF594;
+    border: 3px solid #0D0D0D;
+    border-radius: 0.5rem;
+    margin: 1rem 0;
+    position: relative;
+        
+    .label {
+        margin-left: 1rem;
+        background-color: #0D0D0D;
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0 0 0.5rem 0.5rem;
+    }
+    
+    .content {
+        margin-top: 1.5rem;
+        padding: 1rem;
+    }
+}
+
+// q: Do I refer to classname with a . or # ?
+// a: . for class, # for id
+
+.draw-box {
+    background: white;
+
+
+  .react-p5 {
+    margin: 0 auto;
+    visibility: visible;
+
+
+    .p5Canvas {
+      margin: 0 auto;
+      visibility: visible !important;
+      cursor: crosshair;
+    }
+  }
+
+}
+
+.inline-math-box {
+    display: inline-block;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: #adb5bd;
+    pointer-events: none;
+    height: 0;
+}
+
+.code-block {
+    position: relative;
+    padding: 0rem 0.5rem;
+  
+    select {
+      position: absolute;
+      right: 1rem;
+      top: 0.5rem;
+    }
+}
+
+.image-resizer {
+  display: inline-flex;
+  position: relative;
+  flex-grow: 0;
+  
+  .resize-trigger {
+    position: absolute;
+    right: -6px;
+    bottom: -9px;
+    opacity: 0;
+    transition: opacity .3s ease;
+    color: #3259a5;
+  }
+  
+  &:hover .resize-trigger {
+    opacity: 1;
+  }
+}
+
+.my-image {
+  width: 800px;
+}
+
+ul[data-type="taskList"] {
+  list-style: none;
+  padding: 0 0 0 2rem;
+
+  p {
+    margin: 0;
+  }
+
+  li {
+    display: flex;
+
+    > label {
+      flex: 0 0 auto;
+      margin-right: 0rem;
+      user-select: none;
+    }
+
+    > div {
+      flex: 1 1 auto;
+    }
+  }
+}

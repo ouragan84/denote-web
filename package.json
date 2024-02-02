@@ -1,0 +1,211 @@
+{
+  "name": "denote-app",
+  "version": "0.2.0",
+  "description": "Note taking app for the STEM students.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "APP_DEV=true electron .",
+    "build": "webpack --mode production --config webpack.common.js",
+    "deploy": "export GH_TOKEN=$(cat ./gh_token) && npm i && npm run build && rm -rf dist && electron-builder build --mac --win --publish always",
+    "watch": "webpack --config webpack.common.js --watch",
+    "dist": "npm i && npm run build && rm -rf dist && electron-builder build --publish never"
+  },
+  "build": {
+    "appId": "com.denote.app",
+    "productName": "Denote",
+    "copyright": "Copyright © 2023 Denote",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "main.js",
+      "package.json",
+      "assets/*",
+      "src/public/*",
+      "index.html",
+      "update_logs.html",
+      "forge.config.js",
+      "webpack.common.js",
+      "package-lock.json",
+      "package.json",
+      "scripts/*"
+    ],
+    "mac": {
+      "target": {
+        "target": "default",
+        "arch": [
+          "universal"
+        ]
+      },
+      "category": "public.app-category.productivity",
+      "icon": "assets/Denote-Icon-Rounded-1024.icns",
+      "identity": "Edgar Baudry (T3Q5PMNQ47)",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": {
+        "target": "nsis",
+        "arch": [
+          "x64"
+        ]
+      },
+      "icon": "assets/Denote-Icon-Rounded-256.ico"
+    },
+    "nsis": {
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false,
+      "runAfterFinish": true,
+      "deleteAppDataOnUninstall": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "ouragan84",
+        "repo": "denote-releases",
+        "releaseType": "release"
+      }
+    ],
+    "afterSign": "scripts/notarize.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ouragan84/denote-releases.git"
+  },
+  "publish": {
+    "provider": "github",
+    "owner": "ouragan84",
+    "repo": "denote-releases",
+    "releaseType": "release"
+  },
+  "keywords": [
+    "editorjs",
+    "latex",
+    "math",
+    "mathematics",
+    "markdown",
+    "markdown-editor",
+    "text-editor",
+    "editor",
+    "note",
+    "denote",
+    "note-taking",
+    "stem",
+    "students",
+    "education",
+    "svg-drawing",
+    "excalidraw",
+    "drawing",
+    "svg",
+    "student",
+    "science",
+    "engineering",
+    "technology",
+    "maths",
+    "graphing",
+    "desmos",
+    "coding",
+    "programming",
+    "code",
+    "python"
+  ],
+  "author": "Denote",
+  "license": "ISC",
+  "dependencies": {
+    "@tiptap/core": "^2.0.3",
+    "@tiptap/extension-code-block-lowlight": "^2.0.3",
+    "@tiptap/extension-color": "^2.0.3",
+    "@tiptap/extension-document": "^2.0.3",
+    "@tiptap/extension-dropcursor": "^2.0.3",
+    "@tiptap/extension-highlight": "^2.0.3",
+    "@tiptap/extension-image": "^2.0.3",
+    "@tiptap/extension-list-item": "^2.0.3",
+    "@tiptap/extension-paragraph": "^2.0.3",
+    "@tiptap/extension-placeholder": "^2.0.3",
+    "@tiptap/extension-task-item": "^2.0.3",
+    "@tiptap/extension-task-list": "^2.0.3",
+    "@tiptap/extension-text": "^2.0.3",
+    "@tiptap/extension-text-style": "^2.0.3",
+    "@tiptap/extension-typography": "^2.0.3",
+    "@tiptap/extension-underline": "^2.0.3",
+    "@tiptap/pm": "^2.0.3",
+    "@tiptap/react": "^2.0.3",
+    "@tiptap/starter-kit": "^2.0.3",
+    "css-loader": "^6.7.3",
+    "electron-is-dev": "^2.0.0",
+    "electron-log": "^4.4.8",
+    "electron-store": "^8.1.0",
+    "electron-updater": "^5.3.0",
+    "fs": "^0.0.1-security",
+    "highlight": "^0.2.4",
+    "install": "^0.13.0",
+    "jsdom": "^21.1.1",
+    "katex": "^0.16.7",
+    "lowlight": "^2.9.0",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-mark": "^3.0.1",
+    "mathquill": "^0.10.1-a",
+    "node-machine-id": "^1.1.12",
+    "npm": "^9.6.6",
+    "os": "^0.1.2",
+    "path": "^0.12.7",
+    "prosemirror-model": "^1.19.1",
+    "prosemirror-state": "^1.4.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "react-mathquill": "^1.0.3",
+    "react-modal": "^3.16.1",
+    "react-p5": "^1.3.35",
+    "react-resizable": "^3.0.5",
+    "react-tooltip": "^5.13.0",
+    "sass": "^1.62.1",
+    "sass-loader": "^13.2.2",
+    "style-loader": "^3.3.2",
+    "styled-components": "^6.0.0-rc.1",
+    "tiptap": "^1.32.2",
+    "tiptap-extensions": "^1.35.2",
+    "tiptap-imagresize": "^1.0.2",
+    "tiptap-markdown": "^0.7.2",
+    "universal-analytics": "^0.5.3",
+    "uuid": "^9.0.0",
+    "xml-formatter": "^3.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "@electron/osx-sign": "^1.0.4",
+    "app-builder-lib": "^24.4.0",
+    "babel-loader": "^9.1.2",
+    "dotenv": "^16.0.3",
+    "electron": "^24.2.0",
+    "electron-builder": "^24.4.0",
+    "electron-builder-notarize": "^1.5.1",
+    "electron-builder-squirrel-windows": "^24.4.0",
+    "electron-notarize": "^1.2.2",
+    "electron-packager": "^17.1.1",
+    "electron-reload": "^2.0.0-alpha.1",
+    "file-loader": "^6.2.0",
+    "webpack": "^5.80.0",
+    "webpack-cli": "^5.0.2"
+  }
+}
