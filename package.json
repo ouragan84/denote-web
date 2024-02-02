@@ -2,99 +2,12 @@
   "name": "denote-app",
   "version": "0.2.0",
   "description": "Note taking app for the STEM students.",
-  "main": "main.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "APP_DEV=true electron .",
-    "build": "webpack --mode production --config webpack.common.js",
-    "deploy": "export GH_TOKEN=$(cat ./gh_token) && npm i && npm run build && rm -rf dist && electron-builder build --mac --win --publish always",
-    "watch": "webpack --config webpack.common.js --watch",
-    "dist": "npm i && npm run build && rm -rf dist && electron-builder build --publish never"
-  },
-  "build": {
-    "appId": "com.denote.app",
-    "productName": "Denote",
-    "copyright": "Copyright © 2023 Denote",
-    "files": [
-      "build/**/*",
-      "node_modules/**/*",
-      "main.js",
-      "package.json",
-      "assets/*",
-      "src/public/*",
-      "index.html",
-      "update_logs.html",
-      "forge.config.js",
-      "webpack.common.js",
-      "package-lock.json",
-      "package.json",
-      "scripts/*"
-    ],
-    "mac": {
-      "target": {
-        "target": "default",
-        "arch": [
-          "universal"
-        ]
-      },
-      "category": "public.app-category.productivity",
-      "icon": "assets/Denote-Icon-Rounded-1024.icns",
-      "identity": "Edgar Baudry (T3Q5PMNQ47)",
-      "hardenedRuntime": true,
-      "gatekeeperAssess": false,
-      "entitlements": "entitlements.mac.plist",
-      "entitlementsInherit": "entitlements.mac.plist"
-    },
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "target": {
-        "target": "nsis",
-        "arch": [
-          "x64"
-        ]
-      },
-      "icon": "assets/Denote-Icon-Rounded-256.ico"
-    },
-    "nsis": {
-      "artifactName": "${productName}-Setup-${version}.${ext}",
-      "oneClick": true,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": false,
-      "runAfterFinish": true,
-      "deleteAppDataOnUninstall": true
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "ouragan84",
-        "repo": "denote-releases",
-        "releaseType": "release"
-      }
-    ],
-    "afterSign": "scripts/notarize.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ouragan84/denote-releases.git"
-  },
-  "publish": {
-    "provider": "github",
-    "owner": "ouragan84",
-    "repo": "denote-releases",
-    "releaseType": "release"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "keywords": [
     "editorjs",
@@ -150,10 +63,6 @@
     "@tiptap/react": "^2.0.3",
     "@tiptap/starter-kit": "^2.0.3",
     "css-loader": "^6.7.3",
-    "electron-is-dev": "^2.0.0",
-    "electron-log": "^4.4.8",
-    "electron-store": "^8.1.0",
-    "electron-updater": "^5.3.0",
     "fs": "^0.0.1-security",
     "highlight": "^0.2.4",
     "install": "^0.13.0",
@@ -169,6 +78,7 @@
     "path": "^0.12.7",
     "prosemirror-model": "^1.19.1",
     "prosemirror-state": "^1.4.3",
+    "react-scripts": "5.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
@@ -185,8 +95,6 @@
     "tiptap-extensions": "^1.35.2",
     "tiptap-imagresize": "^1.0.2",
     "tiptap-markdown": "^0.7.2",
-    "universal-analytics": "^0.5.3",
-    "uuid": "^9.0.0",
     "xml-formatter": "^3.4.1"
   },
   "devDependencies": {
@@ -197,15 +105,20 @@
     "app-builder-lib": "^24.4.0",
     "babel-loader": "^9.1.2",
     "dotenv": "^16.0.3",
-    "electron": "^24.2.0",
-    "electron-builder": "^24.4.0",
-    "electron-builder-notarize": "^1.5.1",
-    "electron-builder-squirrel-windows": "^24.4.0",
-    "electron-notarize": "^1.2.2",
-    "electron-packager": "^17.1.1",
-    "electron-reload": "^2.0.0-alpha.1",
     "file-loader": "^6.2.0",
     "webpack": "^5.80.0",
     "webpack-cli": "^5.0.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
