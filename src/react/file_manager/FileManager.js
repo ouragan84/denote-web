@@ -1,149 +1,89 @@
-  
-  import React, { useState, useEffect, useRef } from "react";
-  import File from "./FileButton";
+import React, { useState, useEffect, useRef } from "react";
+import File from "./FileButton";
 
-  import {FaFolderOpen, FaFileMedical} from 'react-icons/fa'
-  import {MdFeedback} from 'react-icons/md'
+import {FaFolderOpen, FaFileMedical} from 'react-icons/fa'
+import {MdFeedback} from 'react-icons/md'
 
-  import { Tooltip } from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 
+const ignoreList = [
+  '.git',
+  '.DS_Store',
+];
 
-  const ignoreList = [
-    '.git',
-    '.DS_Store',
-  ];
+const extension = '.dnt';
 
-  const extension = '.dnt';
+// Fake directory
+const fakeDirectory = {
+  name: 'root',
+  path: '/',
+  isFolder: true,
+  items: [
+    {
+      name: 'file1',
+      path: '/file1',
+      content: 'This is file 1',
+      isFolder: false,
+      items: []
+    },
+    {
+      name: 'file2',
+      path: '/file2',
+      content: 'This is file 2',
+      isFolder: false,
+      items: []
+    }
+  ]
+};
 
-  function FileManager({content, updateContent, setEditorLoaded, openFilePath }) {
+function FileManager({content, updateContent, setEditorLoaded, openFilePath }) {
 
-      const [explorerData, setExplorerData] = useState(null)
-      const [workingFolder, setWorkingFolder] = useState(null)
-      const [workingFile, setWorkingFile] = useState(null)
+    const [explorerData, setExplorerData] = useState(fakeDirectory)
+    const [workingFolder, setWorkingFolder] = useState(null)
+    const [workingFile, setWorkingFile] = useState(null)
 
-      const contentRef = useRef(content);
-      const workingFolderRef = useRef(workingFolder);
+    const contentRef = useRef(content);
+    const workingFolderRef = useRef(workingFolder);
 
-      const openNewFile = () => {
-        updateContent(null, "");
-      }
+    const openNewFile = () => {
+      updateContent(null, "");
+    }
 
-      const getFolderData = (folderPath) => {
+    const getFolderData = (folderPath) => {
+        // Simulate reading from a file system by searching the fake directory
+        const findFolder = (folder, path) => {
+          if (folder.path === path) return folder;
+          for (const item of folder.items) {
+            if (item.isFolder) {
+              const result = findFolder(item, path);
+              if (result) return result;
+            }
+          }
+          return null;
+        };
 
-          // console.log(typeof folderPath, folderPath)
+        return findFolder(fakeDirectory, folderPath);
+    }
 
-          if(!folderPath || folderPath === '')
-                return;
+    useEffect(() => {
+      contentRef.current = content;
+    }, [content]);
 
-          if(!fs.existsSync(folderPath))
-              return;
+    useEffect(() => {
+      workingFolderRef.current = workingFolder;
+    }, [workingFolder]);
 
-          let folderData = {
-              name: path.basename(folderPath),
-              path: folderPath,
-              isFolder: true,
-              onClick: () => {},
-              items: []
-          };
+    useEffect(() => {
+        // Simulate opening a folder
+        const folderData = getFolderData('/');
+        setExplorerData(folderData);
+        setEditorLoaded(true);
+    }, []);
 
-          let folderChildren = fs.readdirSync(folderPath);
-
-          folderChildren.forEach(file => {
-              if (ignoreList.includes(file))
-                  return;
-              
-              if (fs.lstatSync(path.join(folderPath, file)).isDirectory()){
-                  const newFolderData = getFolderData(path.join(folderPath, file))
-                  if(newFolderData)
-                    folderData.items.push(newFolderData);
-              }else{
-                    if (path.extname(file) !== extension)
-                        return;
-
-                  folderData.items.push({
-                      name: file.split(extension)[0],
-                      path: path.join(folderPath, file),
-                      onClick: () => { updateContent(path.join(folderPath, file), fs.readFileSync(path.join(folderPath, file), 'utf8')); },
-                      isFolder: false,
-                      items: []
-                  });
-              }
-          });
-
-          return folderData;
-      }
-
-      useEffect(() => {
-        contentRef.current = content;
-      }, [content]);
-
-      useEffect(() => {
-        workingFolderRef.current = workingFolder;
-      }, [workingFolder]);
-
-      useEffect(() => {
-          // directory was selected
-          ipcRenderer.on('open-folder-reply', (event, folderPath) => {
-              if (!folderPath)
-                  return;
-
-              setWorkingFolder(folderPath);
-
-              let folderData = getFolderData(folderPath);
-
-              console.log(folderData)
-
-              setExplorerData(folderData);
-
-              setEditorLoaded(true);
-          });
-
-          // file shortcut was pressed
-          ipcRenderer.on('file-saved-shortcut', (event) => {
-              if (workingFile){
-                  console.log('file is already saved');
-                  return;
-              }
-
-              ipcRenderer.send('file-saved');
-          })
-
-          // new file shortcut was pressed
-          ipcRenderer.on('new-file-shortcut', (event) => {
-            openNewFile();
-          })
-
-          // file was saved
-          ipcRenderer.on('file-saved-reply', (event, filePath) => {
-            filePath = `${filePath}`;
-            console.log('file-saved-reply', filePath);
-            console.log('contentRef.current', contentRef.current);
-
-            updateContent(filePath, contentRef.current);
-
-            if (!filePath)
-                return;
-            setWorkingFile(filePath);
-
-            console.log('workingFolder', workingFolderRef.current);
+    const [b1active, setB1active] = useState(false)
+    const [b2active, setB2active] = useState(false)
             
-            // update explorer
-            let folderData = getFolderData(workingFolderRef.current);
-            setExplorerData(folderData);
-          });
-
-          // call open folder
-          ipcRenderer.send('open-saved-folder');
-
-          return () => {
-              ipcRenderer.removeAllListeners();
-          };
-      }, []);
-
-      const [b1active, setB1active] = useState(false)
-      const [b2active, setB2active] = useState(false)
-              
-      return (
+    return (
           <>
             <div style={{backgroundColor:'#f7fbff', boxShadow: "0px 1px 1px lightgray", paddingTop:1,display:'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
                 <Tooltip place='bottom' id='filetool'/>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import path from "path";
 import { FaFolder, FaFile, FaAngleDown } from "react-icons/fa"
 
 
@@ -17,7 +16,7 @@ function FileButton({explorer, clickCallback, path, isRoot=false, indent=0, vert
         transform: 'rotate(-90deg)',
     }
     
-    const [explorerData, etExplorerData] = useState(explorer)
+    const [explorerData, setExplorerData] = useState(explorer)
     const [expand, setExpand] = useState(isRoot)
     const [bg, setBg] = useState('#f7fbff')
     

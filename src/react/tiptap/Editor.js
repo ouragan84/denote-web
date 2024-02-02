@@ -555,37 +555,37 @@ export default ({content, updateContent, setEditorCallback, fileName, version, u
       });
     }
 
-    useEffect(() => {
-      ipcRenderer.on('open-image-reply', async (event, filePath) => {
-        if (filePath) {
-          // in base64, add data in form "data:image/png;base64,dataHere"
-          const base64Data = fs.readFileSync(filePath, { encoding: 'base64' })
-          const imageType = filePath.split('.').pop();
+    // useEffect(() => {
+    //   ipcRenderer.on('open-image-reply', async (event, filePath) => {
+    //     if (filePath) {
+    //       // in base64, add data in form "data:image/png;base64,dataHere"
+    //       const base64Data = fs.readFileSync(filePath, { encoding: 'base64' })
+    //       const imageType = filePath.split('.').pop();
 
-          const base64 = `data:image/${imageType};base64,${base64Data}` 
+    //       const base64 = `data:image/${imageType};base64,${base64Data}` 
 
-          let {width, height} = await getImageHeightAndWidth(base64);
+    //       let {width, height} = await getImageHeightAndWidth(base64);
 
-          console.log(width)
+    //       console.log(width)
 
-          // const editorWidth = editorRef.current.view.dom.clientWidth;
+    //       // const editorWidth = editorRef.current.view.dom.clientWidth;
 
-          // console.log(editorWidth, width, height);
+    //       // console.log(editorWidth, width, height);
 
-          // if(width > editorWidth){
-          //   height = width / editorWidth * height;
-          //   width = editorWidth;
-          // }
+    //       // if(width > editorWidth){
+    //       //   height = width / editorWidth * height;
+    //       //   width = editorWidth;
+    //       // }
 
-          editorRef.current.chain().focus().insertMyImage({ base64: base64 }).run()
+    //       editorRef.current.chain().focus().insertMyImage({ base64: base64 }).run()
 
-        }
-      })
+    //     }
+    //   })
 
-      return () => {
-        ipcRenderer.removeAllListeners('open-image-reply')
-      }
-    }, []);
+    //   return () => {
+    //     ipcRenderer.removeAllListeners('open-image-reply')
+    //   }
+    // }, []);
 
     const handleKeyDown = (event) => {
       // make sure not in a code block
