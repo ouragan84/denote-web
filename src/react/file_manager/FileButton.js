@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ipcRenderer } from "electron";
 import path from "path";
-import fs from "fs";
 import { FaFolder, FaFile, FaAngleDown } from "react-icons/fa"
 
 

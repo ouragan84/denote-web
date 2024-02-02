@@ -39,8 +39,6 @@ import {FaUndo, FaRedo} from 'react-icons/fa'
 
 import styled, { keyframes } from 'styled-components'
 
-import {ipcRenderer} from 'electron'
-import fs from 'fs'
 import Modal from 'react-modal'
 import {Tooltip} from 'react-tooltip'
 

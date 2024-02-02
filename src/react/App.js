@@ -1,13 +1,12 @@
 import React, {useState, useEffect, useRef} from "react";
 // import Editor from "./quill/Editor";
 import Editor, {resetEditorContent} from "./tiptap/Editor";
-import { ipcRenderer , shell} from "electron";
 import FileManager from "./file_manager/FileManager";
 // import DrawBox from './tiptap/DrawBoxComponent';
 import {BsDot} from 'react-icons/bs'
 
 import path from "path";
-import fs from "fs";
+
 import { Tooltip } from "react-tooltip";
 
 export default () => {

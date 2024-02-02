@@ -1,8 +1,5 @@
   
   import React, { useState, useEffect, useRef } from "react";
-  import { ipcRenderer, shell } from "electron";
-  import path from "path";
-  import fs from "fs";
   import File from "./FileButton";
 
   import {FaFolderOpen, FaFileMedical} from 'react-icons/fa'
@@ -10,7 +7,6 @@
 
   import { Tooltip } from "react-tooltip";
 
-  const { v4: uuid } = require('uuid');
 
   const ignoreList = [
     '.git',
@@ -47,7 +43,6 @@
               path: folderPath,
               isFolder: true,
               onClick: () => {},
-              id: uuid(),
               items: []
           };
 
@@ -70,7 +65,6 @@
                       path: path.join(folderPath, file),
                       onClick: () => { updateContent(path.join(folderPath, file), fs.readFileSync(path.join(folderPath, file), 'utf8')); },
                       isFolder: false,
-                      id: uuid(),
                       items: []
                   });
               }
